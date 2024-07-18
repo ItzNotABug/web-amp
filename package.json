@@ -2,7 +2,7 @@
   "name": "@itznotabug/web-amp",
   "homepage": "https://github.com/itznotabug/web-amp",
   "description": "Refactored Appwrite Web SDK with support for named parameter objects",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "license": "BSD-3-Clause",
   "main": "dist/cjs/sdk.js",
   "exports": {
