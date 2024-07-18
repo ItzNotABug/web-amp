@@ -40,24 +40,27 @@ Same as https://github.com/appwrite/sdk-for-web?tab=readme-ov-file#getting-start
 
 Before -
 
-```ts
-const teams = new Teams(client);
-await teams.createMembership(
-    'productId',
-    [Role.label('product')],
+```js
+const functions = new Functions(client);
+await functions.createExecution(
+    'functionId',
     undefined,
-    undefined,
-    undefined,
-    undefined,
-    'Product Team'
+    false,
+    '/',
+    ExecutionMethod.GET,
+    { key: 'value' }
 );
 ```
 
 After -
 
-```ts
-const teams = new Teams(client);
-await teams.createMembership('productId', [Role.label('product')], {
-    name: 'Product Team',
-});
+```js
+const functions = new Functions(client);
+await functions.createExecution(
+    'functionId',
+    {
+        headers: { key: 'value' },
+        method: ExecutionMethod.GET
+    }
+);
 ```
