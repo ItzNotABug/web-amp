@@ -29,7 +29,7 @@ you use any Appwrite services:
 
 ```html
 
-<script src="https://cdn.jsdelivr.net/npm/@itznotabug/web-amp@1.5"></script>
+<script src="https://cdn.jsdelivr.net/npm/@itznotabug/web-amp@1.5.1"></script>
 ```
 
 ## Getting Started
