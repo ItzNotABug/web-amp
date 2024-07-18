@@ -1,14 +1,12 @@
 import { Service } from '../service';
+import type { Payload } from '../client';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
-import type { UploadProgress, Payload } from '../client';
 
 export class Teams extends Service {
-
-     constructor(client: Client)
-     {
+    constructor(client: Client) {
         super(client);
-     }
+    }
 
     /**
      * List teams
@@ -16,12 +14,18 @@ export class Teams extends Service {
      * Get a list of all the teams in which the current user is a member. You can
      * use the parameters to filter your results.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.TeamList<Preferences>> {
+     */
+    async list<Preferences extends Models.Preferences>(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.TeamList<Preferences>> {
+        const { queries, search } = params || {};
+
         const apiPath = '/teams';
         const payload: Payload = {};
 
@@ -34,9 +38,14 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -51,8 +60,12 @@ export class Teams extends Service {
      * @param {string[]} roles
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async create<Preferences extends Models.Preferences>(teamId: string, name: string, roles?: string[]): Promise<Models.Team<Preferences>> {
+     */
+    async create<Preferences extends Models.Preferences>(
+        teamId: string,
+        name: string,
+        roles?: string[],
+    ): Promise<Models.Team<Preferences>> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -77,9 +90,14 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -90,8 +108,10 @@ export class Teams extends Service {
      * @param {string} teamId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async get<Preferences extends Models.Preferences>(teamId: string): Promise<Models.Team<Preferences>> {
+     */
+    async get<Preferences extends Models.Preferences>(
+        teamId: string,
+    ): Promise<Models.Team<Preferences>> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -100,9 +120,14 @@ export class Teams extends Service {
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -114,8 +139,11 @@ export class Teams extends Service {
      * @param {string} name
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateName<Preferences extends Models.Preferences>(teamId: string, name: string): Promise<Models.Team<Preferences>> {
+     */
+    async updateName<Preferences extends Models.Preferences>(
+        teamId: string,
+        name: string,
+    ): Promise<Models.Team<Preferences>> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -132,9 +160,14 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -146,7 +179,7 @@ export class Teams extends Service {
      * @param {string} teamId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async delete(teamId: string): Promise<{}> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
@@ -156,9 +189,14 @@ export class Teams extends Service {
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -168,17 +206,29 @@ export class Teams extends Service {
      * members have read access to this endpoint.
      *
      * @param {string} teamId
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async listMemberships(teamId: string, queries?: string[], search?: string): Promise<Models.MembershipList> {
+     */
+    async listMemberships(
+        teamId: string,
+        params?: {
+            queries?: string[];
+            search?: string;
+        },
+    ): Promise<Models.MembershipList> {
+        const { queries, search } = params || {};
+
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/memberships'.replace(
+            '{teamId}',
+            teamId,
+        );
         const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
@@ -190,9 +240,14 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -204,33 +259,46 @@ export class Teams extends Service {
      * team to the invited user, and an account will be created for them if one
      * doesn't exist. If initiated from a Server SDK, the new member will be added
      * automatically to the team.
-     * 
+     *
      * You only need to provide one of a user ID, email, or phone number. Appwrite
      * will prioritize accepting the user ID > email > phone number if you provide
      * more than one of these parameters.
-     * 
+     *
      * Use the `url` parameter to redirect the user from the invitation email to
      * your app. After the user is redirected, use the [Update Team Membership
      * Status](https://appwrite.io/docs/references/cloud/client-web/teams#updateMembershipStatus)
-     * endpoint to allow the user to accept the invitation to the team. 
-     * 
+     * endpoint to allow the user to accept the invitation to the team.
+     *
      * Please note that to avoid a [Redirect
      * Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
      * Appwrite will accept the only redirect URLs under the domains you have
      * added as a platform on the Appwrite Console.
-     * 
+     *
      *
      * @param {string} teamId
      * @param {string[]} roles
-     * @param {string} email
-     * @param {string} userId
-     * @param {string} phone
-     * @param {string} url
-     * @param {string} name
+     * @param {Object} params
+     * @param {string} params.email
+     * @param {string} params.userId
+     * @param {string} params.phone
+     * @param {string} params.url
+     * @param {string} params.name
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createMembership(teamId: string, roles: string[], email?: string, userId?: string, phone?: string, url?: string, name?: string): Promise<Models.Membership> {
+     */
+    async createMembership(
+        teamId: string,
+        roles: string[],
+        params?: {
+            email?: string;
+            userId?: string;
+            phone?: string;
+            url?: string;
+            name?: string;
+        },
+    ): Promise<Models.Membership> {
+        const { email, userId, phone, url, name } = params || {};
+
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -239,7 +307,10 @@ export class Teams extends Service {
             throw new AppwriteException('Missing required parameter: "roles"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/memberships'.replace(
+            '{teamId}',
+            teamId,
+        );
         const payload: Payload = {};
 
         if (typeof email !== 'undefined') {
@@ -267,9 +338,14 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -282,23 +358,35 @@ export class Teams extends Service {
      * @param {string} membershipId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async getMembership(teamId: string, membershipId: string): Promise<Models.Membership> {
+     */
+    async getMembership(
+        teamId: string,
+        membershipId: string,
+    ): Promise<Models.Membership> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -307,28 +395,36 @@ export class Teams extends Service {
      * Modify the roles of a team member. Only team members with the owner role
      * have access to this endpoint. Learn more about [roles and
      * permissions](https://appwrite.io/docs/permissions).
-     * 
+     *
      *
      * @param {string} teamId
      * @param {string} membershipId
      * @param {string[]} roles
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateMembership(teamId: string, membershipId: string, roles: string[]): Promise<Models.Membership> {
+     */
+    async updateMembership(
+        teamId: string,
+        membershipId: string,
+        roles: string[],
+    ): Promise<Models.Membership> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
 
         if (typeof roles === 'undefined') {
             throw new AppwriteException('Missing required parameter: "roles"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
 
         if (typeof roles !== 'undefined') {
@@ -336,9 +432,14 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -352,23 +453,32 @@ export class Teams extends Service {
      * @param {string} membershipId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async deleteMembership(teamId: string, membershipId: string): Promise<{}> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -377,10 +487,10 @@ export class Teams extends Service {
      * Use this endpoint to allow a user to accept an invitation to join a team
      * after being redirected back to your app from the invitation email received
      * by the user.
-     * 
+     *
      * If the request is successful, a session for the user is automatically
      * created.
-     * 
+     *
      *
      * @param {string} teamId
      * @param {string} membershipId
@@ -388,14 +498,21 @@ export class Teams extends Service {
      * @param {string} secret
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateMembershipStatus(teamId: string, membershipId: string, userId: string, secret: string): Promise<Models.Membership> {
+     */
+    async updateMembershipStatus(
+        teamId: string,
+        membershipId: string,
+        userId: string,
+        secret: string,
+    ): Promise<Models.Membership> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
 
         if (typeof userId === 'undefined') {
@@ -406,7 +523,9 @@ export class Teams extends Service {
             throw new AppwriteException('Missing required parameter: "secret"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}/status'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}/status'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
 
         if (typeof userId !== 'undefined') {
@@ -418,9 +537,14 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -433,8 +557,10 @@ export class Teams extends Service {
      * @param {string} teamId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async getPrefs<Preferences extends Models.Preferences>(teamId: string): Promise<Preferences> {
+     */
+    async getPrefs<Preferences extends Models.Preferences>(
+        teamId: string,
+    ): Promise<Preferences> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -443,9 +569,14 @@ export class Teams extends Service {
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -459,8 +590,11 @@ export class Teams extends Service {
      * @param {object} prefs
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updatePrefs<Preferences extends Models.Preferences>(teamId: string, prefs: object): Promise<Preferences> {
+     */
+    async updatePrefs<Preferences extends Models.Preferences>(
+        teamId: string,
+        prefs: object,
+    ): Promise<Preferences> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -477,8 +611,13 @@ export class Teams extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
-};
+}

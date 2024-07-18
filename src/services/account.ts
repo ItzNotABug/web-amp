@@ -1,34 +1,39 @@
 import { Service } from '../service';
+import type { Payload } from '../client';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
-import type { UploadProgress, Payload } from '../client';
 import { AuthenticatorType } from '../enums/authenticator-type';
 import { AuthenticationFactor } from '../enums/authentication-factor';
 import { OAuthProvider } from '../enums/o-auth-provider';
 
 export class Account extends Service {
-
-     constructor(client: Client)
-     {
+    constructor(client: Client) {
         super(client);
-     }
+    }
 
     /**
      * Get account
      *
-     * Get the currently logged in user.
+     * Get the currently logged-in user.
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async get<Preferences extends Models.Preferences>(): Promise<Models.User<Preferences>> {
+     */
+    async get<Preferences extends Models.Preferences>(): Promise<
+        Models.User<Preferences>
+    > {
         const apiPath = '/account';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -37,7 +42,7 @@ export class Account extends Service {
      * Use this endpoint to allow a new user to register a new account in your
      * project. After the user registration completes successfully, you can use
      * the
-     * [/account/verfication](https://appwrite.io/docs/references/cloud/client-web/account#createVerification)
+     * [/account/verification](https://appwrite.io/docs/references/cloud/client-web/account#createVerification)
      * route to start verifying the user email address. To allow the new user to
      * login to their new account, you need to create a new [account
      * session](https://appwrite.io/docs/references/cloud/client-web/account#createEmailSession).
@@ -48,8 +53,13 @@ export class Account extends Service {
      * @param {string} name
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async create<Preferences extends Models.Preferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>> {
+     */
+    async create<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -59,7 +69,9 @@ export class Account extends Service {
         }
 
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
 
         const apiPath = '/account';
@@ -82,9 +94,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -97,20 +114,25 @@ export class Account extends Service {
      * user password is required to complete this request.
      * This endpoint can also be used to convert an anonymous account to a normal
      * one, by passing an email address and a new password.
-     * 
+     *
      *
      * @param {string} email
      * @param {string} password
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateEmail<Preferences extends Models.Preferences>(email: string, password: string): Promise<Models.User<Preferences>> {
+     */
+    async updateEmail<Preferences extends Models.Preferences>(
+        email: string,
+        password: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof email === 'undefined') {
             throw new AppwriteException('Missing required parameter: "email"');
         }
 
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
 
         const apiPath = '/account/email';
@@ -125,9 +147,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -138,7 +165,7 @@ export class Account extends Service {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listIdentities(queries?: string[]): Promise<Models.IdentityList> {
         const apiPath = '/account/identities';
         const payload: Payload = {};
@@ -148,9 +175,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -161,19 +193,29 @@ export class Account extends Service {
      * @param {string} identityId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async deleteIdentity(identityId: string): Promise<{}> {
         if (typeof identityId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "identityId"');
+            throw new AppwriteException(
+                'Missing required parameter: "identityId"',
+            );
         }
 
-        const apiPath = '/account/identities/{identityId}'.replace('{identityId}', identityId);
+        const apiPath = '/account/identities/{identityId}'.replace(
+            '{identityId}',
+            identityId,
+        );
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -187,15 +229,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async createJWT(): Promise<Models.Jwt> {
         const apiPath = '/account/jwt';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -207,7 +254,7 @@ export class Account extends Service {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listLogs(queries?: string[]): Promise<Models.LogList> {
         const apiPath = '/account/logs';
         const payload: Payload = {};
@@ -217,9 +264,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -230,8 +282,10 @@ export class Account extends Service {
      * @param {boolean} mfa
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateMFA<Preferences extends Models.Preferences>(mfa: boolean): Promise<Models.User<Preferences>> {
+     */
+    async updateMFA<Preferences extends Models.Preferences>(
+        mfa: boolean,
+    ): Promise<Models.User<Preferences>> {
         if (typeof mfa === 'undefined') {
             throw new AppwriteException('Missing required parameter: "mfa"');
         }
@@ -244,9 +298,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -260,19 +319,29 @@ export class Account extends Service {
      * @param {AuthenticatorType} type
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createMfaAuthenticator(type: AuthenticatorType): Promise<Models.MfaType> {
+     */
+    async createMfaAuthenticator(
+        type: AuthenticatorType,
+    ): Promise<Models.MfaType> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        const apiPath = '/account/mfa/authenticators/{type}'.replace('{type}', type);
+        const apiPath = '/account/mfa/authenticators/{type}'.replace(
+            '{type}',
+            type,
+        );
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -280,14 +349,17 @@ export class Account extends Service {
      *
      * Verify an authenticator app after adding it using the [add
      * authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
-     * method. add 
+     * method. add
      *
      * @param {AuthenticatorType} type
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateMfaAuthenticator<Preferences extends Models.Preferences>(type: AuthenticatorType, otp: string): Promise<Models.User<Preferences>> {
+     */
+    async updateMfaAuthenticator<Preferences extends Models.Preferences>(
+        type: AuthenticatorType,
+        otp: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -296,7 +368,10 @@ export class Account extends Service {
             throw new AppwriteException('Missing required parameter: "otp"');
         }
 
-        const apiPath = '/account/mfa/authenticators/{type}'.replace('{type}', type);
+        const apiPath = '/account/mfa/authenticators/{type}'.replace(
+            '{type}',
+            type,
+        );
         const payload: Payload = {};
 
         if (typeof otp !== 'undefined') {
@@ -304,9 +379,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -318,8 +398,11 @@ export class Account extends Service {
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async deleteMfaAuthenticator(type: AuthenticatorType, otp: string): Promise<{}> {
+     */
+    async deleteMfaAuthenticator(
+        type: AuthenticatorType,
+        otp: string,
+    ): Promise<{}> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -328,7 +411,10 @@ export class Account extends Service {
             throw new AppwriteException('Missing required parameter: "otp"');
         }
 
-        const apiPath = '/account/mfa/authenticators/{type}'.replace('{type}', type);
+        const apiPath = '/account/mfa/authenticators/{type}'.replace(
+            '{type}',
+            type,
+        );
         const payload: Payload = {};
 
         if (typeof otp !== 'undefined') {
@@ -336,9 +422,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -351,8 +442,10 @@ export class Account extends Service {
      * @param {AuthenticationFactor} factor
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createMfaChallenge(factor: AuthenticationFactor): Promise<Models.MfaChallenge> {
+     */
+    async createMfaChallenge(
+        factor: AuthenticationFactor,
+    ): Promise<Models.MfaChallenge> {
         if (typeof factor === 'undefined') {
             throw new AppwriteException('Missing required parameter: "factor"');
         }
@@ -365,9 +458,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -383,10 +481,12 @@ export class Account extends Service {
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async updateMfaChallenge(challengeId: string, otp: string): Promise<{}> {
         if (typeof challengeId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "challengeId"');
+            throw new AppwriteException(
+                'Missing required parameter: "challengeId"',
+            );
         }
 
         if (typeof otp === 'undefined') {
@@ -405,9 +505,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -417,15 +522,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listMfaFactors(): Promise<Models.MfaFactors> {
         const apiPath = '/account/mfa/factors';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -438,15 +548,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async getMfaRecoveryCodes(): Promise<Models.MfaRecoveryCodes> {
         const apiPath = '/account/mfa/recovery-codes';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -460,15 +575,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async createMfaRecoveryCodes(): Promise<Models.MfaRecoveryCodes> {
         const apiPath = '/account/mfa/recovery-codes';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -481,15 +601,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async updateMfaRecoveryCodes(): Promise<Models.MfaRecoveryCodes> {
         const apiPath = '/account/mfa/recovery-codes';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -500,8 +625,10 @@ export class Account extends Service {
      * @param {string} name
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateName<Preferences extends Models.Preferences>(name: string): Promise<Models.User<Preferences>> {
+     */
+    async updateName<Preferences extends Models.Preferences>(
+        name: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
@@ -514,9 +641,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -530,10 +662,15 @@ export class Account extends Service {
      * @param {string} oldPassword
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updatePassword<Preferences extends Models.Preferences>(password: string, oldPassword?: string): Promise<Models.User<Preferences>> {
+     */
+    async updatePassword<Preferences extends Models.Preferences>(
+        password: string,
+        oldPassword?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
 
         const apiPath = '/account/password';
@@ -548,9 +685,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -566,14 +708,19 @@ export class Account extends Service {
      * @param {string} password
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updatePhone<Preferences extends Models.Preferences>(phone: string, password: string): Promise<Models.User<Preferences>> {
+     */
+    async updatePhone<Preferences extends Models.Preferences>(
+        phone: string,
+        password: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof phone === 'undefined') {
             throw new AppwriteException('Missing required parameter: "phone"');
         }
 
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
 
         const apiPath = '/account/phone';
@@ -588,9 +735,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -600,15 +752,22 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async getPrefs<Preferences extends Models.Preferences>(): Promise<Preferences> {
+     */
+    async getPrefs<
+        Preferences extends Models.Preferences,
+    >(): Promise<Preferences> {
         const apiPath = '/account/prefs';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -621,8 +780,10 @@ export class Account extends Service {
      * @param {Partial<Preferences>} prefs
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updatePrefs<Preferences extends Models.Preferences>(prefs: Partial<Preferences>): Promise<Models.User<Preferences>> {
+     */
+    async updatePrefs<Preferences extends Models.Preferences>(
+        prefs: Partial<Preferences>,
+    ): Promise<Models.User<Preferences>> {
         if (typeof prefs === 'undefined') {
             throw new AppwriteException('Missing required parameter: "prefs"');
         }
@@ -635,9 +796,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -656,7 +822,7 @@ export class Account extends Service {
      * @param {string} url
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async createRecovery(email: string, url: string): Promise<Models.Token> {
         if (typeof email === 'undefined') {
             throw new AppwriteException('Missing required parameter: "email"');
@@ -678,9 +844,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -691,7 +862,7 @@ export class Account extends Service {
      * the redirect URL you have provided when sending your request to the [POST
      * /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#createRecovery)
      * endpoint.
-     * 
+     *
      * Please note that in order to avoid a [Redirect
      * Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
      * the only valid redirect URLs are the ones from domains you have set when
@@ -702,8 +873,12 @@ export class Account extends Service {
      * @param {string} password
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateRecovery(userId: string, secret: string, password: string): Promise<Models.Token> {
+     */
+    async updateRecovery(
+        userId: string,
+        secret: string,
+        password: string,
+    ): Promise<Models.Token> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -713,7 +888,9 @@ export class Account extends Service {
         }
 
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
 
         const apiPath = '/account/recovery';
@@ -732,9 +909,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -745,15 +927,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listSessions(): Promise<Models.SessionList> {
         const apiPath = '/account/sessions';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -764,15 +951,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async deleteSessions(): Promise<{}> {
         const apiPath = '/account/sessions';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -788,15 +980,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async createAnonymousSession(): Promise<Models.Session> {
         const apiPath = '/account/sessions/anonymous';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -804,7 +1001,7 @@ export class Account extends Service {
      *
      * Allow the user to login into their account by providing a valid email and
      * password combination. This route will create a new session for the user.
-     * 
+     *
      * A user is limited to 10 active sessions at a time by default. [Learn more
      * about session
      * limits](https://appwrite.io/docs/authentication-security#limits).
@@ -813,14 +1010,19 @@ export class Account extends Service {
      * @param {string} password
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createEmailPasswordSession(email: string, password: string): Promise<Models.Session> {
+     */
+    async createEmailPasswordSession(
+        email: string,
+        password: string,
+    ): Promise<Models.Session> {
         if (typeof email === 'undefined') {
             throw new AppwriteException('Missing required parameter: "email"');
         }
 
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
 
         const apiPath = '/account/sessions/email';
@@ -835,9 +1037,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -851,8 +1058,11 @@ export class Account extends Service {
      * @param {string} secret
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateMagicURLSession(userId: string, secret: string): Promise<Models.Session> {
+     */
+    async updateMagicURLSession(
+        userId: string,
+        secret: string,
+    ): Promise<Models.Session> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -873,9 +1083,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -885,32 +1100,47 @@ export class Account extends Service {
      * choice. Each OAuth2 provider should be enabled from the Appwrite console
      * first. Use the success and failure arguments to provide a redirect URL's
      * back to your app when login is completed.
-     * 
+     *
      * If there is already an active session, the new session will be attached to
      * the logged-in account. If there are no active sessions, the server will
      * attempt to look for a user with the same email address as the email
      * received from the OAuth2 provider and attach the new session to the
      * existing user. If no matching user is found - the server will create a new
      * user.
-     * 
+     *
      * A user is limited to 10 active sessions at a time by default. [Learn more
      * about session
      * limits](https://appwrite.io/docs/authentication-security#limits).
-     * 
      *
      * @param {OAuthProvider} provider
-     * @param {string} success
-     * @param {string} failure
-     * @param {string[]} scopes
+     * @param {Object} params
+     * @param {string} params.success
+     * @param {string} params.failure
+     * @param {string[]} params.scopes
      * @throws {AppwriteException}
      * @returns {void|string}
-    */
-    createOAuth2Session(provider: OAuthProvider, success?: string, failure?: string, scopes?: string[]): void | URL {
+     */
+    createOAuth2Session(
+        provider: OAuthProvider,
+        params?: {
+            success?: string;
+            failure?: string;
+            scopes?: string[];
+        },
+    ): void | URL {
+        const { success, failure, scopes } = params || {};
+
         if (typeof provider === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "provider"');
+            throw new AppwriteException(
+                'Missing required parameter: "provider"',
+            );
         }
 
-        const apiPath = '/account/sessions/oauth2/{provider}'.replace('{provider}', provider);
+        const apiPath = '/account/sessions/oauth2/{provider}'.replace(
+            '{provider}',
+            provider,
+        );
+
         const payload: Payload = {};
 
         if (typeof success !== 'undefined') {
@@ -927,7 +1157,6 @@ export class Account extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
-
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
@@ -950,8 +1179,11 @@ export class Account extends Service {
      * @param {string} secret
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updatePhoneSession(userId: string, secret: string): Promise<Models.Session> {
+     */
+    async updatePhoneSession(
+        userId: string,
+        secret: string,
+    ): Promise<Models.Session> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -972,9 +1204,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -988,8 +1225,11 @@ export class Account extends Service {
      * @param {string} secret
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createSession(userId: string, secret: string): Promise<Models.Session> {
+     */
+    async createSession(
+        userId: string,
+        secret: string,
+    ): Promise<Models.Session> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1010,9 +1250,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1024,19 +1269,29 @@ export class Account extends Service {
      * @param {string} sessionId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async getSession(sessionId: string): Promise<Models.Session> {
         if (typeof sessionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "sessionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "sessionId"',
+            );
         }
 
-        const apiPath = '/account/sessions/{sessionId}'.replace('{sessionId}', sessionId);
+        const apiPath = '/account/sessions/{sessionId}'.replace(
+            '{sessionId}',
+            sessionId,
+        );
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1049,19 +1304,29 @@ export class Account extends Service {
      * @param {string} sessionId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async updateSession(sessionId: string): Promise<Models.Session> {
         if (typeof sessionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "sessionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "sessionId"',
+            );
         }
 
-        const apiPath = '/account/sessions/{sessionId}'.replace('{sessionId}', sessionId);
+        const apiPath = '/account/sessions/{sessionId}'.replace(
+            '{sessionId}',
+            sessionId,
+        );
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1076,19 +1341,29 @@ export class Account extends Service {
      * @param {string} sessionId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async deleteSession(sessionId: string): Promise<{}> {
         if (typeof sessionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "sessionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "sessionId"',
+            );
         }
 
-        const apiPath = '/account/sessions/{sessionId}'.replace('{sessionId}', sessionId);
+        const apiPath = '/account/sessions/{sessionId}'.replace(
+            '{sessionId}',
+            sessionId,
+        );
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1100,15 +1375,22 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateStatus<Preferences extends Models.Preferences>(): Promise<Models.User<Preferences>> {
+     */
+    async updateStatus<Preferences extends Models.Preferences>(): Promise<
+        Models.User<Preferences>
+    > {
         const apiPath = '/account/status';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('patch', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'patch',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1120,14 +1402,22 @@ export class Account extends Service {
      * @param {string} providerId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createPushTarget(targetId: string, identifier: string, providerId?: string): Promise<Models.Target> {
+     */
+    async createPushTarget(
+        targetId: string,
+        identifier: string,
+        providerId?: string,
+    ): Promise<Models.Target> {
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
 
         if (typeof identifier === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "identifier"');
+            throw new AppwriteException(
+                'Missing required parameter: "identifier"',
+            );
         }
 
         const apiPath = '/account/targets/push';
@@ -1146,9 +1436,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1159,17 +1454,27 @@ export class Account extends Service {
      * @param {string} identifier
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updatePushTarget(targetId: string, identifier: string): Promise<Models.Target> {
+     */
+    async updatePushTarget(
+        targetId: string,
+        identifier: string,
+    ): Promise<Models.Target> {
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
 
         if (typeof identifier === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "identifier"');
+            throw new AppwriteException(
+                'Missing required parameter: "identifier"',
+            );
         }
 
-        const apiPath = '/account/targets/{targetId}/push'.replace('{targetId}', targetId);
+        const apiPath = '/account/targets/{targetId}/push'.replace(
+            '{targetId}',
+            targetId,
+        );
         const payload: Payload = {};
 
         if (typeof identifier !== 'undefined') {
@@ -1177,9 +1482,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1189,19 +1499,29 @@ export class Account extends Service {
      * @param {string} targetId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async deletePushTarget(targetId: string): Promise<{}> {
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
 
-        const apiPath = '/account/targets/{targetId}/push'.replace('{targetId}', targetId);
+        const apiPath = '/account/targets/{targetId}/push'.replace(
+            '{targetId}',
+            targetId,
+        );
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1213,7 +1533,7 @@ export class Account extends Service {
      * /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
      * endpoint to complete the login process. The secret sent to the user's email
      * is valid for 15 minutes.
-     * 
+     *
      * A user is limited to 10 active sessions at a time by default. [Learn more
      * about session
      * limits](https://appwrite.io/docs/authentication-security#limits).
@@ -1223,8 +1543,12 @@ export class Account extends Service {
      * @param {boolean} phrase
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createEmailToken(userId: string, email: string, phrase?: boolean): Promise<Models.Token> {
+     */
+    async createEmailToken(
+        userId: string,
+        email: string,
+        phrase?: boolean,
+    ): Promise<Models.Token> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1249,9 +1573,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1268,20 +1597,29 @@ export class Account extends Service {
      * address is valid for 1 hour. If you are on a mobile device you can leave
      * the URL parameter empty, so that the login completion will be handled by
      * your Appwrite instance by default.
-     * 
+     *
      * A user is limited to 10 active sessions at a time by default. [Learn more
      * about session
      * limits](https://appwrite.io/docs/authentication-security#limits).
-     * 
      *
      * @param {string} userId
      * @param {string} email
-     * @param {string} url
-     * @param {boolean} phrase
+     * @param {Object} params
+     * @param {string} params.url
+     * @param {boolean} params.phrase
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createMagicURLToken(userId: string, email: string, url?: string, phrase?: boolean): Promise<Models.Token> {
+     */
+    async createMagicURLToken(
+        userId: string,
+        email: string,
+        params?: {
+            url?: string;
+            phrase?: boolean;
+        },
+    ): Promise<Models.Token> {
+        const { url, phrase } = params || {};
+
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1310,9 +1648,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1321,31 +1664,46 @@ export class Account extends Service {
      * Allow the user to login to their account using the OAuth2 provider of their
      * choice. Each OAuth2 provider should be enabled from the Appwrite console
      * first. Use the success and failure arguments to provide a redirect URL's
-     * back to your app when login is completed. 
-     * 
+     * back to your app when login is completed.
+     *
      * If authentication succeeds, `userId` and `secret` of a token will be
      * appended to the success URL as query parameters. These can be used to
      * create a new session using the [Create
      * session](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
      * endpoint.
-     * 
+     *
      * A user is limited to 10 active sessions at a time by default. [Learn more
      * about session
      * limits](https://appwrite.io/docs/authentication-security#limits).
      *
      * @param {OAuthProvider} provider
-     * @param {string} success
-     * @param {string} failure
-     * @param {string[]} scopes
+     * @param {Object} params
+     * @param {string} params.success
+     * @param {string} params.failure
+     * @param {string[]} params.scopes
      * @throws {AppwriteException}
      * @returns {void|string}
-    */
-    createOAuth2Token(provider: OAuthProvider, success?: string, failure?: string, scopes?: string[]): void | URL {
+     */
+    createOAuth2Token(
+        provider: OAuthProvider,
+        params?: {
+            success?: string;
+            failure?: string;
+            scopes?: string[];
+        },
+    ): void | URL {
+        const { success, failure, scopes } = params || {};
+
         if (typeof provider === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "provider"');
+            throw new AppwriteException(
+                'Missing required parameter: "provider"',
+            );
         }
 
-        const apiPath = '/account/tokens/oauth2/{provider}'.replace('{provider}', provider);
+        const apiPath = '/account/tokens/oauth2/{provider}'.replace(
+            '{provider}',
+            provider,
+        );
         const payload: Payload = {};
 
         if (typeof success !== 'undefined') {
@@ -1362,7 +1720,6 @@ export class Account extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
-
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
@@ -1383,7 +1740,7 @@ export class Account extends Service {
      * /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
      * endpoint to complete the login process. The secret sent to the user's phone
      * is valid for 15 minutes.
-     * 
+     *
      * A user is limited to 10 active sessions at a time by default. [Learn more
      * about session
      * limits](https://appwrite.io/docs/authentication-security#limits).
@@ -1392,8 +1749,11 @@ export class Account extends Service {
      * @param {string} phone
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createPhoneToken(userId: string, phone: string): Promise<Models.Token> {
+     */
+    async createPhoneToken(
+        userId: string,
+        phone: string,
+    ): Promise<Models.Token> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1414,9 +1774,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1431,17 +1796,17 @@ export class Account extends Service {
      * parameters. Learn more about how to [complete the verification
      * process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification).
      * The verification link sent to the user's email address is valid for 7 days.
-     * 
+     *
      * Please note that in order to avoid a [Redirect
      * Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md),
      * the only valid redirect URLs are the ones from domains you have set when
      * adding your platforms in the console interface.
-     * 
+     *
      *
      * @param {string} url
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async createVerification(url: string): Promise<Models.Token> {
         if (typeof url === 'undefined') {
             throw new AppwriteException('Missing required parameter: "url"');
@@ -1455,9 +1820,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1472,8 +1842,11 @@ export class Account extends Service {
      * @param {string} secret
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updateVerification(userId: string, secret: string): Promise<Models.Token> {
+     */
+    async updateVerification(
+        userId: string,
+        secret: string,
+    ): Promise<Models.Token> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1494,9 +1867,14 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1513,15 +1891,20 @@ export class Account extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async createPhoneVerification(): Promise<Models.Token> {
         const apiPath = '/account/verification/phone';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -1536,8 +1919,11 @@ export class Account extends Service {
      * @param {string} secret
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async updatePhoneVerification(userId: string, secret: string): Promise<Models.Token> {
+     */
+    async updatePhoneVerification(
+        userId: string,
+        secret: string,
+    ): Promise<Models.Token> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1558,8 +1944,13 @@ export class Account extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('put', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'put',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
-};
+}
