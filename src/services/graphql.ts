@@ -4,11 +4,9 @@ import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
 
 export class Graphql extends Service {
-
-     constructor(client: Client)
-     {
+    constructor(client: Client) {
         super(client);
-     }
+    }
 
     /**
      * GraphQL endpoint
@@ -18,7 +16,7 @@ export class Graphql extends Service {
      * @param {object} query
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async query(query: object): Promise<{}> {
         if (typeof query === 'undefined') {
             throw new AppwriteException('Missing required parameter: "query"');
@@ -32,10 +30,15 @@ export class Graphql extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'x-sdk-graphql': 'true',
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'x-sdk-graphql': 'true',
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -46,7 +49,7 @@ export class Graphql extends Service {
      * @param {object} query
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async mutation(query: object): Promise<{}> {
         if (typeof query === 'undefined') {
             throw new AppwriteException('Missing required parameter: "query"');
@@ -60,9 +63,14 @@ export class Graphql extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'x-sdk-graphql': 'true',
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'x-sdk-graphql': 'true',
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
-};
+}

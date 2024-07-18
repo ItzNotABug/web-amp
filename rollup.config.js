@@ -10,18 +10,18 @@ export default {
             format: 'cjs',
             file: pkg.main,
             esModule: false,
-            sourcemap: true
+            sourcemap: true,
         },
         {
             format: 'es',
             file: pkg.module,
-            sourcemap: true
+            sourcemap: true,
         },
         {
             format: 'iife',
             file: pkg.jsdelivr,
             name: '@itznotabug/web-amp',
-            extend: true
-        }
-    ]
+            extend: true,
+        },
+    ],
 };

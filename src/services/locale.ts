@@ -4,11 +4,9 @@ import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
 
 export class Locale extends Service {
-
-     constructor(client: Client)
-     {
+    constructor(client: Client) {
         super(client);
-     }
+    }
 
     /**
      * Get user locale
@@ -17,20 +15,25 @@ export class Locale extends Service {
      * country code, country name, continent name, continent code, ip address and
      * suggested currency. You can use the locale header to get the data in a
      * supported language.
-     * 
+     *
      * ([IP Geolocation by DB-IP](https://db-ip.com))
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async get(): Promise<Models.Locale> {
         const apiPath = '/locale';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -41,15 +44,20 @@ export class Locale extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listCodes(): Promise<Models.LocaleCodeList> {
         const apiPath = '/locale/codes';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -60,15 +68,20 @@ export class Locale extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listContinents(): Promise<Models.ContinentList> {
         const apiPath = '/locale/continents';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -79,15 +92,20 @@ export class Locale extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listCountries(): Promise<Models.CountryList> {
         const apiPath = '/locale/countries';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -98,15 +116,20 @@ export class Locale extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listCountriesEU(): Promise<Models.CountryList> {
         const apiPath = '/locale/countries/eu';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -117,15 +140,20 @@ export class Locale extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listCountriesPhones(): Promise<Models.PhoneList> {
         const apiPath = '/locale/countries/phones';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -137,15 +165,20 @@ export class Locale extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listCurrencies(): Promise<Models.CurrencyList> {
         const apiPath = '/locale/currencies';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -156,14 +189,19 @@ export class Locale extends Service {
      *
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async listLanguages(): Promise<Models.LanguageList> {
         const apiPath = '/locale/languages';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'get',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
-};
+}

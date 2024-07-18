@@ -11,7 +11,7 @@ export namespace Models {
          * List of documents.
          */
         documents: Document[];
-    }
+    };
     /**
      * Sessions List
      */
@@ -24,7 +24,7 @@ export namespace Models {
          * List of sessions.
          */
         sessions: Session[];
-    }
+    };
     /**
      * Identities List
      */
@@ -37,7 +37,7 @@ export namespace Models {
          * List of identities.
          */
         identities: Identity[];
-    }
+    };
     /**
      * Logs List
      */
@@ -50,7 +50,7 @@ export namespace Models {
          * List of logs.
          */
         logs: Log[];
-    }
+    };
     /**
      * Files List
      */
@@ -63,7 +63,7 @@ export namespace Models {
          * List of files.
          */
         files: File[];
-    }
+    };
     /**
      * Teams List
      */
@@ -76,7 +76,7 @@ export namespace Models {
          * List of teams.
          */
         teams: Team<Preferences>[];
-    }
+    };
     /**
      * Memberships List
      */
@@ -89,7 +89,7 @@ export namespace Models {
          * List of memberships.
          */
         memberships: Membership[];
-    }
+    };
     /**
      * Executions List
      */
@@ -102,7 +102,7 @@ export namespace Models {
          * List of executions.
          */
         executions: Execution[];
-    }
+    };
     /**
      * Countries List
      */
@@ -115,7 +115,7 @@ export namespace Models {
          * List of countries.
          */
         countries: Country[];
-    }
+    };
     /**
      * Continents List
      */
@@ -128,7 +128,7 @@ export namespace Models {
          * List of continents.
          */
         continents: Continent[];
-    }
+    };
     /**
      * Languages List
      */
@@ -141,7 +141,7 @@ export namespace Models {
          * List of languages.
          */
         languages: Language[];
-    }
+    };
     /**
      * Currencies List
      */
@@ -154,7 +154,7 @@ export namespace Models {
          * List of currencies.
          */
         currencies: Currency[];
-    }
+    };
     /**
      * Phones List
      */
@@ -167,7 +167,7 @@ export namespace Models {
          * List of phones.
          */
         phones: Phone[];
-    }
+    };
     /**
      * Locale codes list
      */
@@ -180,7 +180,7 @@ export namespace Models {
          * List of localeCodes.
          */
         localeCodes: LocaleCode[];
-    }
+    };
     /**
      * Document
      */
@@ -210,7 +210,7 @@ export namespace Models {
          */
         $permissions: string[];
         [key: string]: any;
-    }
+    };
     /**
      * Log
      */
@@ -299,7 +299,7 @@ export namespace Models {
          * Country name.
          */
         countryName: string;
-    }
+    };
     /**
      * User
      */
@@ -380,7 +380,7 @@ export namespace Models {
          * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
         accessedAt: string;
-    }
+    };
     /**
      * AlgoMD5
      */
@@ -389,7 +389,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
     /**
      * AlgoSHA
      */
@@ -398,7 +398,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
     /**
      * AlgoPHPass
      */
@@ -407,7 +407,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
     /**
      * AlgoBcrypt
      */
@@ -416,7 +416,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
     /**
      * AlgoScrypt
      */
@@ -441,7 +441,7 @@ export namespace Models {
          * Length used to compute hash.
          */
         length: number;
-    }
+    };
     /**
      * AlgoScryptModified
      */
@@ -462,7 +462,7 @@ export namespace Models {
          * Key used to compute hash.
          */
         signerKey: string;
-    }
+    };
     /**
      * AlgoArgon2
      */
@@ -483,13 +483,13 @@ export namespace Models {
          * Number of threads used to compute hash.
          */
         threads: number;
-    }
+    };
     /**
      * Preferences
      */
     export type Preferences = {
         [key: string]: any;
-    }
+    };
     /**
      * Session
      */
@@ -610,7 +610,7 @@ export namespace Models {
          * Most recent date in ISO 8601 format when the session successfully passed MFA challenge.
          */
         mfaUpdatedAt: string;
-    }
+    };
     /**
      * Identity
      */
@@ -655,7 +655,7 @@ export namespace Models {
          * Identity Provider Refresh Token.
          */
         providerRefreshToken: string;
-    }
+    };
     /**
      * Token
      */
@@ -684,7 +684,7 @@ export namespace Models {
          * Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
          */
         phrase: string;
-    }
+    };
     /**
      * JWT
      */
@@ -693,7 +693,7 @@ export namespace Models {
          * JWT encoded string.
          */
         jwt: string;
-    }
+    };
     /**
      * Locale
      */
@@ -726,7 +726,7 @@ export namespace Models {
          * Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
          */
         currency: string;
-    }
+    };
     /**
      * LocaleCode
      */
@@ -739,7 +739,7 @@ export namespace Models {
          * Locale name
          */
         name: string;
-    }
+    };
     /**
      * File
      */
@@ -788,7 +788,7 @@ export namespace Models {
          * Total number of chunks uploaded
          */
         chunksUploaded: number;
-    }
+    };
     /**
      * Team
      */
@@ -817,7 +817,7 @@ export namespace Models {
          * Team preferences as a key-value object
          */
         prefs: Preferences;
-    }
+    };
     /**
      * Membership
      */
@@ -874,7 +874,7 @@ export namespace Models {
          * User list of roles
          */
         roles: string[];
-    }
+    };
     /**
      * Execution
      */
@@ -943,7 +943,7 @@ export namespace Models {
          * Function execution duration in seconds.
          */
         duration: number;
-    }
+    };
     /**
      * Country
      */
@@ -956,7 +956,7 @@ export namespace Models {
          * Country two-character ISO 3166-1 alpha code.
          */
         code: string;
-    }
+    };
     /**
      * Continent
      */
@@ -969,7 +969,7 @@ export namespace Models {
          * Continent two letter code.
          */
         code: string;
-    }
+    };
     /**
      * Language
      */
@@ -986,7 +986,7 @@ export namespace Models {
          * Language native name.
          */
         nativeName: string;
-    }
+    };
     /**
      * Currency
      */
@@ -1019,7 +1019,7 @@ export namespace Models {
          * Currency plural name
          */
         namePlural: string;
-    }
+    };
     /**
      * Phone
      */
@@ -1036,7 +1036,7 @@ export namespace Models {
          * Country name.
          */
         countryName: string;
-    }
+    };
     /**
      * Headers
      */
@@ -1049,7 +1049,7 @@ export namespace Models {
          * Header value.
          */
         value: string;
-    }
+    };
     /**
      * MFA Challenge
      */
@@ -1070,7 +1070,7 @@ export namespace Models {
          * Token expiration date in ISO 8601 format.
          */
         expire: string;
-    }
+    };
     /**
      * MFA Recovery Codes
      */
@@ -1079,7 +1079,7 @@ export namespace Models {
          * Recovery codes.
          */
         recoveryCodes: string[];
-    }
+    };
     /**
      * MFAType
      */
@@ -1092,7 +1092,7 @@ export namespace Models {
          * URI for authenticator apps.
          */
         uri: string;
-    }
+    };
     /**
      * MFAFactors
      */
@@ -1113,7 +1113,7 @@ export namespace Models {
          * Can recovery code be used for MFA challenge for this account.
          */
         recoveryCode: boolean;
-    }
+    };
     /**
      * Subscriber
      */
@@ -1154,7 +1154,7 @@ export namespace Models {
          * The target provider type. Can be one of the following: `email`, `sms` or `push`.
          */
         providerType: string;
-    }
+    };
     /**
      * Target
      */
@@ -1191,5 +1191,5 @@ export namespace Models {
          * The target identifier.
          */
         identifier: string;
-    }
+    };
 }

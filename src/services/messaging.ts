@@ -4,11 +4,9 @@ import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
 
 export class Messaging extends Service {
-
-     constructor(client: Client)
-     {
+    constructor(client: Client) {
         super(client);
-     }
+    }
 
     /**
      * Create subscriber
@@ -20,21 +18,34 @@ export class Messaging extends Service {
      * @param {string} targetId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
-    async createSubscriber(topicId: string, subscriberId: string, targetId: string): Promise<Models.Subscriber> {
+     */
+    async createSubscriber(
+        topicId: string,
+        subscriberId: string,
+        targetId: string,
+    ): Promise<Models.Subscriber> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
 
         if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
 
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
 
-        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace('{topicId}', topicId);
+        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace(
+            '{topicId}',
+            topicId,
+        );
         const payload: Payload = {};
 
         if (typeof subscriberId !== 'undefined') {
@@ -46,9 +57,14 @@ export class Messaging extends Service {
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('post', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'post',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
 
     /**
@@ -60,22 +76,33 @@ export class Messaging extends Service {
      * @param {string} subscriberId
      * @throws {AppwriteException}
      * @returns {Promise}
-    */
+     */
     async deleteSubscriber(topicId: string, subscriberId: string): Promise<{}> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
 
         if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
 
-        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'.replace('{topicId}', topicId).replace('{subscriberId}', subscriberId);
+        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
+            .replace('{topicId}', topicId)
+            .replace('{subscriberId}', subscriberId);
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
+        return await this.client.call(
+            'delete',
+            uri,
+            {
+                'content-type': 'application/json',
+            },
+            payload,
+        );
     }
-};
+}
