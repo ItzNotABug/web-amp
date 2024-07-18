@@ -1,8 +1,8 @@
 {
-  "name": "appwrite",
-  "homepage": "https://appwrite.io/support",
-  "description": "Appwrite is an open-source self-hosted backend server that abstract and simplify complex and repetitive development tasks behind a very simple REST API",
-  "version": "15.0.0",
+  "name": "@itznotabug/web-amp",
+  "homepage": "https://github.com/itznotabug/amp",
+  "description": "Refactored Appwrite Web SDK with support for named parameter objects",
+  "version": "1.5",
   "license": "BSD-3-Clause",
   "main": "dist/cjs/sdk.js",
   "exports": {
@@ -17,9 +17,15 @@
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appwrite/sdk-for-web"
+    "url": "https://github.com/itznotabug/amp"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "singleQuote": true
   },
   "scripts": {
+    "lint": "prettier . --check",
+    "format": "prettier . --write",
     "build": "npm run build:types && npm run build:libs",
     "build:types": "tsc --declaration --emitDeclarationOnly --outDir types",
     "build:libs": "rollup -c"
@@ -27,6 +33,7 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "8.3.2",
     "playwright": "1.15.0",
+    "prettier": "^3.3.3",
     "rollup": "2.75.4",
     "serve-handler": "6.1.0",
     "tslib": "2.4.0",
