@@ -1,6 +1,6 @@
 {
   "name": "@itznotabug/web-amp",
-  "homepage": "https://github.com/itznotabug/amp",
+  "homepage": "https://github.com/itznotabug/web-amp",
   "description": "Refactored Appwrite Web SDK with support for named parameter objects",
   "version": "1.5",
   "license": "BSD-3-Clause",
@@ -17,7 +17,7 @@
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/itznotabug/amp"
+    "url": "https://github.com/itznotabug/web-amp"
   },
   "prettier": {
     "tabWidth": 4,
